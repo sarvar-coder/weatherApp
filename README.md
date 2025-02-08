@@ -11,4 +11,7 @@ Swift Arcade
 - MVVM pattern 
 - Getting data nsurlsession and parsing in JSON 
 
+Day 1 
+the first video in playlist is about first intro how to professionally building ios app flow. Also we learnt creating project without storyboard, explaining vector assets and its usefullness. They are mathematically calculated and that's why very looks beautifull, discussing auto-layout 
+
 
