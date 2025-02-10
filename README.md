@@ -29,3 +29,13 @@ This day content contains only shortcuts for using Xcode like pro and also saves
 Due to this video is short and very easy to understand. So i skip this and go directly fourth day video.
 
 
+## Day 4 
+Today's goal is Simplifying layout with Stackview. Therefore the content will be stackview and how to use them smartly.
+Imagine: 
+We need to layout three things text, image and button. It should be from top to bottom.
+Each Components require us to set four constraints for each them and as it is seen takes up energy and time.
+If we used stackview and added these views to stackView then we would need to set four constraints only to stackView 
+By doing that we can minimize the constraints numbers.
+
+on this day we completed the design of the app 
+
