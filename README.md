@@ -24,3 +24,8 @@ this is how our app able to render themselves with one set of definiton  on vari
 
 today we're introduced how ios app can render themselves by using autolayout. And how to use them rightly and pottentilally.
 
+## Day 3
+This day content contains only shortcuts for using Xcode like pro and also saves time the way more productivity
+Due to this video is short and very easy to understand. So i skip this and go directly fourth day video.
+
+
