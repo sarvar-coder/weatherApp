@@ -23,10 +23,27 @@ class WeatherViewController: UIViewController {
     let tempratureLabel = UILabel()
     let cityLabel = UILabel()
     
+    // networking
+    let fetchWeather = FecthingWeatherData.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         style()
         layout()
+
+    }
+    
+    @objc func searchButtonTapped() {
+        guard let cityName = searchTextField.text else { return }
+        if !cityName.isEmpty {
+            fetchBySearchName(cityName: cityName)
+        } else {
+            showAlert()
+        }
+    }
+    
+    @objc func locationButtonTapped() {
+        
     }
 }
 
@@ -49,10 +66,12 @@ extension WeatherViewController {
         locationButton.translatesAutoresizingMaskIntoConstraints = false
         locationButton.setBackgroundImage(UIImage(systemName: "location.north.circle.fill"), for: .normal)
         locationButton.tintColor = .label
+        locationButton.isHidden = true
         
         searchButton.translatesAutoresizingMaskIntoConstraints = false
         searchButton.setBackgroundImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         searchButton.tintColor = .label
+        searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         
         searchTextField.translatesAutoresizingMaskIntoConstraints = false
         searchTextField.placeholder = "Search"
@@ -69,14 +88,12 @@ extension WeatherViewController {
         
         tempratureLabel.translatesAutoresizingMaskIntoConstraints = false
         tempratureLabel.tintColor = .label
-        tempratureLabel.font = .boldSystemFont(ofSize: 100)
-        tempratureLabel.text = "19°C"
+        tempratureLabel.attributedText = makeTemprature(temp: 0)
         
         cityLabel.translatesAutoresizingMaskIntoConstraints = false
         cityLabel.tintColor = .label
         cityLabel.font = .systemFont(ofSize: 32)
-        cityLabel.text = "Tashkent"
-        
+        cityLabel.text = "---"
     }
     
     func layout() {
@@ -123,3 +140,29 @@ extension WeatherViewController {
     }
 }
 
+// MARK: - Helper Methods
+extension WeatherViewController {
+    func fetchBySearchName(cityName: String) {
+        fetchWeather.fetchWeather(byCityName: cityName) { result in
+            switch result {
+            case .success(let success):
+                print(success.main.temp)
+                self.updateLabel(with: success)
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
+    }
+    
+    func updateLabel(with weatherData: WeatherData) {
+        tempratureLabel.attributedText = makeTemprature(temp: weatherData.main.temp - 273.15)
+        cityLabel.text = weatherData.name
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "Please", message: "First type city name which you want to about current weather", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .cancel)
+        alert.addAction(action)
+        present(alert, animated: true)
+    }
+}
